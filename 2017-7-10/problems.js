@@ -47,12 +47,47 @@ function battle(x, y) {
   var ty = 0;
   
   x.split("").forEach(letter => {
-    tx += arr.indexOf(letter)
+    tx += arr.indexOf(letter) + 1
   })
   
   y.split("").forEach(letter => {
-    ty += arr.indexOf(letter)
+    ty += arr.indexOf(letter) + 1
   })
   
   return tx > ty ? x : ty > tx ? y : 'Tie!'
 }
+
+
+
+//////////////////////////////////////////////////
+// Create a function runningAverage() that returns a callable function object. 
+// Update the series with each given value and calculate the current average.
+
+function runningAverage() {
+  let arr = [];
+  return function(num) {
+    arr.push(num);
+    let average = arr.reduce((a,b) => a+b) / arr.length
+    return Math.round(average * 100) / 100
+  }
+
+
+/////////////////////////////////////////////
+//Write a function that finds the longest word in a sentence. 
+//Takes in one string, and returns the longest word as a string.
+//If you finish that, write another function that returns the average length of the words in a string.
+function longestWord(sentence) {
+  var arr = sentence.split(" ").sort((a,b) => b.length >= a.length);
+  return arr[0]
+}
+
+longestWord('hello from the other side')
+
+function averageLength(sentence) {
+  var numberArr = [];
+  var arr = sentence.split(" ").forEach(item => numberArr.push(item.length))
+  var total = numberArr.reduce((a,b) => a+b)
+  return total / numberArr.length
+}
+
+averageLength("one two two three")
