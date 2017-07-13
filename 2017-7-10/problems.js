@@ -91,3 +91,67 @@ function averageLength(sentence) {
 }
 
 averageLength("one two two three")
+
+////////////////////////////////////////////////////////////////////////
+// Number of people in the bus
+//
+// There is a bus moving in the city, and it takes and drop some people in each bus stop.
+//
+// You are provided a list (or array in JS) of integer array. Each integer array has two items which represent number of people get into bus (The first item) and number of people get off the bus (The second item).
+//
+// The first integer array has 0 number in the second item, since the bus is empty in the first bus stop.
+//
+// Your task is to return number of people who are still in the bus after the last bus station. Even though it is the last stop, some people don't get off the bus, and they are probably sleeping there :D
+//
+// Take a look on the test cases.
+//
+// Please keep in mind that the test cases ensure that the number of people in the bus is always >= 0. So the return integer can't be negative.
+
+number([[10,0],[3,5],[5,8]]) //should return 5
+number([[3,0],[9,1],[4,10],[12,2],[6,1],[7,10]]) //should retrun 17
+number([[3,0],[9,1],[4,8],[12,2],[6,1],[7,8]]) //Should return 21
+
+function number(arr) {
+  var total = 0;
+  arr.forEach((item) => {
+    total += item[0];
+    total -= item[1];
+  })
+  return total;
+}
+
+// Other solution
+function passengerTracker(passengers) {
+  return passengers.map(x=>x[0]-x[1]).reduce((x,y) => x+y);
+}
+
+// 1
+// Bob is preparing to pass IQ test. The most frequent task in this test is to find out which one of the given numbers differs from the others. Bob observed that one number usually differs from the others in evenness. Help Bob — to check his answers, he needs a program that among the given numbers finds one that is different in evenness, and return a position of this number.
+
+// ! Keep in mind that your task is to help Bob solve a real IQ test, which means indexes of the elements start from 1 (not 0)
+
+// ##Examples :
+
+iqTest("2 4 7 8 10") //=> 3 // Third number is odd, while the rest of the numbers are even
+
+iqTest("1 2 1 1") //=> 2 // Second number is even, while the rest of the numbers are odd
+
+
+function iqTest(numbers){
+  numbers = numbers.split(" ")
+  var even = [];
+  var odd = [];
+  for (var i = 0; i < numbers.length; i++) {
+    if (numbers[i] % 2 === 0) {
+      even.push(numbers[i])
+    } else {
+      odd.push(numbers[i])
+    }
+  }
+  if (even.length > odd.length) {
+    return numbers.indexOf(odd[0]) + 1;
+  } else if (odd.length > even.length) {
+    return numbers.indexOf(even[0]) + 1;
+  }
+}
+
