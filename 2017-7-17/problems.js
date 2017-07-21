@@ -74,10 +74,10 @@ test.display();
 // Examples:
 
 // accum("abcd");    // "A-Bb-Ccc-Dddd"
- accum("RqaEzty"); // "R-Qq-Aaa-Eeee-Zzzzz-Tttttt-Yyyyyyy"
+accum("RqaEzty"); // "R-Qq-Aaa-Eeee-Zzzzz-Tttttt-Yyyyyyy"
 // accum("cwAt");    // "C-Ww-Aaa-Tttt"
 // The parameter of accum is a string which includes only letters from a..z and A..Z.
-https://www.codewars.com/kata/mumbling
+// https://www.codewars.com/kata/mumbling
 
 function accum(str) {
   var arr = str.toLowerCase().split("");
@@ -132,6 +132,44 @@ function treasureFinder(str) {
   return position;
 }
 
-
-
 treasureFinder('<<<^^V>');
+
+
+///////////////////////////////////////////////////////
+//Time Converter
+//write a function that takes in a single num parameter. Assume the number passed in the an amount of time measured in seconds. your function will convert the number of seconds into a string that will depict how many days, hours, minutes and seconds that is. Return one string.
+
+//assume the largest time value will not go bigger than weeks, don't calculate for months
+
+//Example
+// 234 is passed into the function. the function returns "3:54" (minuts: seconds)
+// 9087 passed in returns "2:31:17" (hours: minutes: seconds)
+
+function convertTime(num) {
+  let minutes = 0;
+  let hours = 0;
+  let days = 0;
+  while (num >= 60) {
+    minutes++;
+    num -= 60;
+  }
+  while (minutes >= 60) {    
+    hours++;
+    minutes -= 60;
+  }
+  while(hours >= 24) {
+    days++;
+    hours -= 24;
+  }
+  var str = '';
+  if (days) {
+    str = `${days}:${hours}:${minutes}:${num}`;
+  } else if(hours) {
+    str = `${hours}:${minutes}:${num}`;
+  } else if (minutes) {
+    str = `${minutes}:${num}`;
+  } else {
+    str = `${num}`;
+  }
+  return str;
+}
