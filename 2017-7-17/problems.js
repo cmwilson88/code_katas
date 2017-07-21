@@ -173,3 +173,75 @@ function convertTime(num) {
   }
   return str;
 }
+
+
+// You are given a string of numbers between 0-9. Find the average of these numbers and return it as a floored whole number (ie: no decimal places) written out as a string. Eg:
+
+// "zero nine five two" -> "four"
+
+// If the string is empty or includes a number greater than 9, return "n/a"
+
+function averageString(str) {
+  // Code away
+  let arr = str.split(" ");
+  for(var i = 0; i < arr.length; i++) {
+    switch(arr[i]) {
+      case ('zero'):
+        arr[i] = 0;
+        break;
+      case ('one'):
+        arr[i] = 1;
+        break;
+      case ('two'):
+        arr[i] = 2;
+        break;
+      case ('three'):
+        arr[i] = 3;
+        break;
+      case ('four'):
+        arr[i] = 4;
+        break;
+      case ('five'):
+        arr[i] = 5;
+        break;
+      case ('six'):
+        arr[i] = 6;
+        break;
+      case ('seven'):
+        arr[i] = 7;
+        break;
+      case ('eight'):
+        arr[i] = 8;
+        break;
+      case ('nine'):
+        arr[i] = 9;
+        break;
+      default: 
+        return 'n/a'
+    }
+  }
+  let average = Math.floor(arr.reduce((a,b) => a+b) / arr.length)
+  switch(average) {
+    case(0):
+      return 'zero';
+    case(1):
+      return 'one';
+    case(2):
+      return 'two';
+    case(3):
+      return 'three';
+    case(4):
+      return 'four';
+    case(5):
+      return 'five';
+    case(6):
+      return 'six';
+    case(7):
+      return 'seven';
+    case(8):
+      return 'eight';
+    case(9):
+      return 'nine';
+  }
+}
+
