@@ -136,3 +136,118 @@ bandNameGenerator('tart')//, 'Tartart')
 bandNameGenerator('dolphin')
 
 
+//////////////////////////////////////////////////////
+
+/*
+Problem 1.
+
+https://www.codewars.com/kata/your-order-please/javascript
+
+Your task is to sort a given string. Each word in the String will contain a single number. This number is the position the word should have in the result.
+
+Note: Numbers can be from 1 to 9. So 1 will be the first word (not 0).
+
+If the input String is empty, return an empty String. The words in the input String will only contain valid consecutive numbers.
+
+For an input: "is2 Thi1s T4est 3a" the function should return "Thi1s is2 3a T4est"
+*/
+
+/////////////////////////////////////////
+function order(words) {
+  return words.split(' ').sort((a,b) => {
+    return a.match(/\d/) - b.match(/\d/)
+  }).join(' ')
+}
+
+
+/*
+
+Problem 2
+
+https://www.codewars.com/kata/551dc350bf4e526099000ae5
+
+Polycarpus works as a DJ in the best Berland nightclub, and he often uses dubstep music in his performance. Recently, he has decided to take a couple of old songs and make dubstep remixes from them.
+
+Let's assume that a song consists of some number of words. To make the dubstep remix of this song, Polycarpus inserts a certain number of words "WUB" before the first word of the song (the number may be zero), after the last word (the number may be zero), and between words (at least one between any pair of neighbouring words), and then the boy glues together all the words, including "WUB", in one string and plays the song at the club.
+
+For example, a song with words "I AM X" can transform into a dubstep remix as "WUBWUBIWUBAMWUBWUBX" and cannot transform into "WUBWUBIAMWUBX".
+
+Recently, Jonny has heard Polycarpus's new dubstep track, but since he isn't into modern music, he decided to find out what was the initial song that Polycarpus remixed. Help Jonny restore the original song.
+
+Input
+
+The input consists of a single non-empty string, consisting only of uppercase English letters, the string's length doesn't exceed 200 characters
+
+Output
+
+Return the words of the initial song that Polycarpus used to make a dubsteb remix. Separate the words with a space.
+
+Examples
+*/
+songDecoder("WUBWEWUBAREWUBWUBTHEWUBCHAMPIONSWUBMYWUBFRIENDWUB")
+  // =>  WE ARE THE CHAMPIONS MY FRIEND
+
+function songDecoder(str) {
+  return str.split('WUB').filter(item => item).join(' ')
+}
+
+
+// 1
+// https://www.codewars.com/kata/moving-zeros-to-the-end/solutions/javascript
+
+// Write an algorithm that takes an array and moves all of the zeros to the end, preserving the order of the other elements.
+
+// moveZeros([false,1,0,1,2,0,1,3,"a"]) // returns[false,1,1,2,1,3,"a",0,0]
+
+var moveZeros = function (arr) {
+  // TODO: Program me
+  for(let i = arr.length; i>=0; i--) {
+    if(arr[i] === 0) {
+      arr.splice(i, 1);
+      arr.push(0)
+    }
+  }
+  return arr
+};
+
+moveZeros([1,2,0,1,0,1,0,3,0,1]);
+
+
+
+// 2
+// https://www.codewars.com/kata/highest-rank-number-in-an-array/train/javascript
+// Write a method highestRank(arr) (or highest-rank in clojure) which returns the number which is most frequent in the given input array (or ISeq). If there is a tie for most frequent number, return the largest number of which is most frequent.
+
+// Example:
+
+// arr = [12, 10, 8, 12, 7, 6, 4, 10, 12];
+// highestRank(arr) //=> returns 12
+
+arr = [12, 10, 8, 12, 7, 6, 4, 10, 12, 10];
+highestRank(arr) //=> returns 12
+
+ //arr = [12, 10, 8, 8, 3, 3, 3, 3, 2, 4, 10, 12, 10];
+ //highestRank(arr) //=> returns 3
+
+function highestRank(arr){
+  arr.sort((a,b) => b - a);
+  let newArr = []
+  let current = null
+  let count = 0
+  arr.forEach(item => {
+    if (item != current) {
+      if (count > 0) {
+        newArr.push({item: current, count: count})
+      } 
+      current = item
+      count=1
+    } else {
+      count++
+    }
+  })
+  let results = newArr.sort((a,b) => b.count - a.count).filter((item, index, arr) => item.count >= arr[0].count)
+  return results[0].item
+}
+  
+
+
