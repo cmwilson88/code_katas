@@ -248,6 +248,3 @@ function highestRank(arr){
   let results = newArr.sort((a,b) => b.count - a.count).filter((item, index, arr) => item.count >= arr[0].count)
   return results[0].item
 }
-  
-
-
