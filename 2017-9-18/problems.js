@@ -82,3 +82,37 @@ function prefill(n, v) {
   } else {
     return []
   }
+  /////////////////////////////////////////////////////////////////////////////
+
+// Write a function, persistence, that takes in a positive parameter num and returns its multiplicative persistence, which is the number of times you must multiply the digits in num until you reach a single digit.
+
+// For example:
+
+// persistence(39) === 3 // because 3*9 = 27, 2*7 = 14, 1*4=4
+//                       // and 4 has only one digit
+
+// persistence(999) === 4 // because 9*9*9 = 729, 7*2*9 = 126,
+//                         // 1*2*6 = 12, and finally 1*2 = 2
+
+// persistence(4) === 0 // because 4 is already a one-digit number
+
+// Sample data: 25, 1475, 3, 672
+// 25: 2 * 5 = 10, 1 * 0 = 0  // 2
+// 1475: 1 * 4 * 7 * 5 = 140, 1 * 4 * 0 = 0 // 2
+// 3: // 
+// 672: 6 * 7 * 2 = 84, 8 * 4 = 32, 3 * 2 = 6 // 3
+
+function persistence(num) {
+   //code me
+   let count = 0;
+   let arr = num.toString().split('')
+
+   while(arr.length > 1) {
+     let result = arr.reduce((a,b) => a*b, 1)
+     arr = result.toString().split('')
+     count++
+   }
+   return count
+}
+
+persistence(672)
