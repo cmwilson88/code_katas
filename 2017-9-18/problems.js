@@ -116,3 +116,196 @@ function persistence(num) {
 }
 
 persistence(672)
+/////////////////////////////////////////////////////////////////////////////////
+
+
+// This kata is designed to test your ability to extend the functionality of built-in ruby classes. In this case, we want you to extend the built-in Array class with the following methods: square(), cube(), average(), sum(), even() and odd().
+
+// Explanation:
+// square() must return a copy of the array, containing all values squared, the original array must not be changed
+// cube() must return a copy of the array, containing all values cubed, the original array must not be changed
+// average() must return the average of all array values, average() on an empty array must return NaN
+// sum() must return the sum of all array values
+// even() must return an array of all even numbers, the original array must not be changed
+// odd() must return an array of all odd numbers, the original array must not be changed
+// Examples:
+
+// var numbers = [1, 2, 3, 4, 5];
+// numbers.square(); // must return [1, 4, 9, 16, 25]
+// numbers.cube(); // must return [1, 8, 27, 64, 125]
+// numbers.average(); // must return 3
+// numbers.sum(); // must return 15
+// numbers.even(); // must return [2, 4]
+// numbers.odd(); // must return [1, 3, 5]
+
+Array.prototype.square = function() {
+  return this.map(item => item*item);
+}
+
+Array.prototype.cube = function() {
+  return this.map(item => Math.pow(item, 3))
+}
+
+Array.prototype.average = function() {
+  let total = this.reduce((a,b) => a + b, 0)
+  let denom = this.length
+  return total/denom
+}
+
+Array.prototype.sum = function() {
+  return this.reduce((a,b) => a + b, 0)
+}
+
+Array.prototype.even = function() {
+  return this.filter(item => item % 2 === 0)
+}
+
+Array.prototype.odd = function() {
+  return this.filter(item => item % 2 !== 0)
+}
+
+/////////////////////////////////////////////////////////////////
+// Given an array, find the int that appears an odd number of times.
+
+// There will always be only one integer that appears an odd number of times.
+
+function findOdd(A) {
+  //happy coding!
+  A.sort((a,b) => a-b)
+  let count = 0
+  let foundOdd = false
+  let compareArr;
+  while (!foundOdd) {
+    compareArr = A.filter(item => item === A[0])
+    if(compareArr.length % 2 !==0) {
+      foundOdd = true
+    } else {
+      A.splice(0, compareArr.length)
+    }
+  }
+  return compareArr[0]
+}
+
+findOdd([1, 1, 1, 1, 1, 1, 10, 1, 1, 1, 1])
+findOdd([1, 1, 2, -2, 5, 2, 4, 4, -1, -2, 5])
+/////////////////////////////////////////////////////////////////
+// Once upon a time, on a way through the old wild west,…
+
+// … a man was given directions to go from one point to another. The directions were "NORTH", "SOUTH", "WEST", "EAST". Clearly "NORTH" and "SOUTH" are opposite, "WEST" and "EAST" too. Going to one direction and coming back the opposite direction is a needless effort. Since this is the wild west, with dreadfull weather and not much water, it's important to save yourself some energy, otherwise you might die of thirst!
+
+// How I crossed the desert the smart way.
+
+// The directions given to the man are, for example, the following:
+
+// ["NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH", "WEST"].
+// or
+
+// { "NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH", "WEST" };
+// or (haskell)
+
+// [North, South, South, East, West, North, West]
+// You can immediatly see that going "NORTH" and then "SOUTH" is not reasonable, better stay to the same place! So the task is to give to the man a simplified version of the plan. A better plan in this case is simply:
+
+// ["WEST"]
+// or
+
+// { "WEST" }
+// or (haskell)
+
+// [West]
+// or (rust)
+
+// [WEST];
+// Other examples:
+
+// In ["NORTH", "SOUTH", "EAST", "WEST"], the direction "NORTH" + "SOUTH" is going north and coming back right away. What a waste of time! Better to do nothing.
+
+// The path becomes ["EAST", "WEST"], now "EAST" and "WEST" annihilate each other, therefore, the final result is [] (nil in Clojure).
+
+// In ["NORTH", "EAST", "WEST", "SOUTH", "WEST", "WEST"], "NORTH" and "SOUTH" are not directly opposite but they become directly opposite after the reduction of "EAST" and "WEST" so the whole path is reducible to ["WEST", "WEST"].
+
+// Task
+
+// Write a function dirReduc which will take an array of strings and returns an array of strings with the needless directions removed (W<->E or S<->N side by side).
+
+// The Haskell version takes a list of directions with data Direction = North | East | West | South. The Clojure version returns nil when the path is reduced to nothing. The Rust version takes a slice of enum Direction {NORTH, SOUTH, EAST, WEST}.
+
+// Examples
+
+// dirReduc(["NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH", "WEST"]) => ["WEST"]
+// dirReduc(["NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH"]) => []
+// See more examples in "Example Tests"
+
+// Note
+
+// Not all paths can be made simpler. The path ["NORTH", "WEST", "SOUTH", "EAST"] is not reducible. "NORTH" and "WEST", "WEST" and "SOUTH", "SOUTH" and "EAST" are not directly opposite of each other and can't become such. Hence the result path is itself : ["NORTH", "WEST", "SOUTH", "EAST"].
+
+function dirReduc(arr) {
+  for (let i = 0; i < arr.length; i++) {
+    switch(arr[i]) {
+      case 'NORTH':
+        if(arr[i+1] === 'SOUTH') {
+          arr.splice(i, 2)
+          i=-1
+        }
+        break;
+      case 'SOUTH':
+        if(arr[i+1] === 'NORTH') {
+          arr.splice(i, 2)
+          i=-1
+        }
+        break;
+      case 'EAST':
+        if(arr[i+1] === 'WEST') {
+          arr.splice(i, 2)
+          i=-1
+        }
+        break;
+      case 'WEST':
+        if(arr[i+1] === 'EAST') {
+          arr.splice(i, 2)
+          i=-1
+        }
+        break;
+      default: 
+        break;
+    }
+  }
+  return arr
+}
+
+dirReduc(["NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH", "WEST"]);
+//////////////////////////////////////////////////////////////////////////////
+// In this kata you have to write a simple Morse code decoder. While the Morse code is now mostly superceded by voice and digital data communication channels, it still has its use in some applications around the world.
+// The Morse code encodes every character as a sequence of "dots" and "dashes". For example, the letter A is coded as ·−, letter Q is coded as −−·−, and digit 1 is coded as ·−−−. The Morse code is case-insensitive, traditionally capital letters are used. When the message is written in Morse code, a single space is used to separate the character codes and 3 spaces are used to separate words. For example, the message HEY JUDE in Morse code is ···· · −·−−   ·−−− ··− −·· ·.
+
+// NOTE: Extra spaces before or after the code have no meaning and should be ignored.
+
+// In addition to letters, digits and some punctuation, there are some special service codes, the most notorious of those is the international distress signal SOS (that was first issued by Titanic), that is coded as ···−−−···. These special codes are treated as single special characters, and usually are transmitted as separate words.
+
+// Your task is to implement a function decodeMorse(morseCode), that would take the morse code as input and return a decoded human-readable string.
+
+// For example:
+
+// decodeMorse('.... . -.--   .--- ..- -.. .')
+// //should return "HEY JUDE"
+// The Morse code table is preloaded for you as a dictionary, feel free to use it. In CoffeeScript, C++, JavaScript, PHP, Python, Ruby and TypeScript, the table can be accessed like this: MORSE_CODE['.--'], in Java it is MorseCode.get('.--'), in C# it is MorseCode.Get('.--'), in Haskell the codes are in a Map String String and can be accessed like this: morseCodes ! ".--", in Elixir it is morse_codes variable.
+
+// All the test strings would contain valid Morse code, so you may skip checking for errors and exceptions. In C#, tests will fail if the solution code throws an exception, please keep that in mind. This is mostly because otherwise the engine would simply ignore the tests, resulting in a "valid" solution.
+
+// Good luck!
+
+// After you complete this kata, you may try yourself at Decode the Morse code, advanced.
+
+decodeMorse = function(morseCode){
+  //your code here
+  let arr = morseCode.trim().split(' ')
+  let decoded = arr.map(item => item ? MORSE_CODE[item] : 'space')
+  for(let i = 0; i < decoded.length; i++) {
+    if(decoded[i] === 'space' && decoded[i+1] === 'space') {
+      decoded[i] = ' '
+      decoded.splice(i+1, 1)
+    }
+  }
+  return decoded.join('')
+}
