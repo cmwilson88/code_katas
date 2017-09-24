@@ -309,3 +309,87 @@ decodeMorse = function(morseCode){
   }
   return decoded.join('')
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Two teams are playing a game of tennis. The team sizes are the same and each player from the first team plays against the corresponding player from the second team.
+// Each player has a certain power level. If a player has a higher power level than her opponent, she is guaranteed to win and her team would get 1 point for that win while the opponents get a 0.
+// You are the coach of the first team and you know the power levels of all the players before the game starts. You want to rearrange the players in your team to earn the highest possible total score.
+
+// Input/Output
+// [input] integer array team1
+// The power levels of the players in the first team. Teams have less than 100 players and each power level is less than 100.
+// [input] integer array team2
+// Array of the same length as team1, the power levels of the players of the second team.
+// [output] an integer
+// The maximum number of points the first team can get.
+
+// Example
+// For team1 = [3,2,4] and team2 = [1,2,3], the output should be 3.
+// If you don't rearrange the players in the first team, it will get 2 points, since 3 > 1, 2 = 2 and 4 > 3.
+
+// However, if you rearrange the order of the players to [2, 3, 4], the first team will get 3 points.
+function maximizePoints(team1, team2) {
+  //coding and coding..
+  let reorder = []
+  let count = 0;
+  for (let i = 0; i < team2.length; i++) {
+    
+    let largestNegMargin = 0;
+    let largestNegItem = null;
+    let smallestPosMargin = 999999;
+    let smallestPosItem = null;
+    
+    for (let j = 0; j < team1.length; j++)  {
+      let currentMargin = team1[j] - team2[i];
+      if (currentMargin > 0) {
+        if (currentMargin < smallestPosMargin) {
+          smallestPosMargin = currentMargin
+          smallestPosItem = team1[j]
+        }
+      } else if (currentMargin < 0) {
+        if (currentMargin < largestNegMargin) {
+          largestNegMargin = currentMargin
+          largestNegItem = team1[j]
+        }
+      }
+    }
+    if(smallestPosMargin < 999999) {
+      reorder.push(smallestPosItem)
+      team1.splice(team1.indexOf(smallestPosItem),1)
+    } else {
+      reorder.push(largestNegItem)
+      team1.splice(team1.indexOf(largestNegItem),1)
+    }
+  }
+  for (let i = 0; i < reorder.length; i++) {
+    if (reorder[i] > team2[i]) {
+      count++
+    }
+  }
+  
+  return count
+}
+
+
+///////////////////////////////////////////////////////////////////////////
+// Fool's Day
+
+// Since today is April's Fools day,Abigail suspects that the news she is reading about today are false. She is worried to look silly to other participants.
+
+// She knows that the news is false if it contains the string "abigail" as a subsequence.
+
+// Help Abigail determine whether this piece of news is true.
+
+// INPUT The first and only line contains a non-empty string s of length no greater than 1000, consisting of lowercase letters of Latin alphabet (a-z).
+
+// OUTPUT Output YES if the string s contains the sequence "abigail" as a subsequence. Otherwise, output NO
+
+function newsIsFalse(news) {
+  let compare = ['a','b','i','g','a','i','l']
+  news = news.split('');
+  for (let i = 0; i < news.length; i++) {
+    if (news[i] === compare[0]) {
+      compare.splice(0,1)
+    }
+  }
+  return compare.length ? 'NO' : 'YES'
+}
