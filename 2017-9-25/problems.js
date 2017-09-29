@@ -482,3 +482,40 @@ function isValidCoordinates(coordinates){
   }
   return true
 }
+//////////////////////////////////////////////////////
+// Your goal in this kata is to implement an difference function, which subtracts one list from another.
+
+// It should remove all values from list a, which are present in list b.
+
+// array_diff([1,2],[1]) == [2]
+// If a value is present in b, all of its occurrences must be removed from the other:
+
+// array_diff([1,2,2,2,3],[2]) == [1,3]
+
+function array_diff(a, b) {
+  return a.filter(item => item !== b[0]);
+}
+/////////////////////////////////////////////////////////
+// #Srot the inner ctnnoet in dsnnieedcg oredr
+
+// You have to sort the inner content of every word of a string in descending order.
+// The inner content is the content of a word without first and the last char.
+
+// Some examples:
+
+// "sort the inner content in descending order" -> "srot the inner ctonnet in dsnnieedcg oredr"
+// "wait for me" -> "wiat for me"
+// "this kata is easy" -> "tihs ktaa is esay"
+// The string will never be null and will never be empty.
+// It will contain only lowercase-letters and whitespaces.
+function sortTheInnerContent(words){
+  let arr = words.split(' ');
+  return arr.map(word => {
+    let inner = word.substr(1, word.length-2)
+    if(word.length > 2) {
+      return word[0] + inner.split('').sort().reverse().join('') + word[word.length-1]
+    } else {
+      return word
+    }
+  }).join(' ');
+}
